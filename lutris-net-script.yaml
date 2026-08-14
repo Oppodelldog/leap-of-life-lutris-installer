@@ -1,0 +1,33 @@
+# Optional: the same installer in the form lutris.net expects.
+#
+# Only the content below goes into the "Installer script" field of the submission
+# form at lutris.net; name / slug / version / runner are separate form fields:
+#
+#   Name:    Leap of Life
+#   Slug:    leap-of-life
+#   Version: summer-frog-game-jam-v1
+#   Runner:  wine
+#
+# Not submitted so far — this repo is the distribution channel. Kept here in case
+# the game is ever added to the Lutris database.
+files:
+- installer: "N/A:Select the leap-of-life-windows.zip you downloaded from itch.io"
+
+game:
+  exe: $GAMEDIR/FrogSniper.exe
+  prefix: $GAMEDIR
+  arch: win64
+
+installer:
+- task:
+    name: create_prefix
+    prefix: $GAMEDIR
+    arch: win64
+- extract:
+    file: installer
+    dst: $GAMEDIR
+- task:
+    name: wineexec
+    executable: $GAMEDIR/Engine/Extras/Redist/en-us/vc_redist.x64.exe
+    args: /q /norestart
+    prefix: $GAMEDIR

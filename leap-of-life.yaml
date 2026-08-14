@@ -1,0 +1,39 @@
+# Lutris installer for "Leap of Life" by Oppodelldog
+# https://oppodelldog.itch.io/leap-of-life
+#
+# Install with:
+#   lutris -i https://raw.githubusercontent.com/horroko-dev/leap-of-life-lutris-installer/main/leap-of-life.yaml
+#
+# The game is a Windows-only Unreal Engine 5 build. itch.io serves downloads
+# only behind a CSRF-protected POST, so there is no stable direct URL to link
+# here: the installer asks for the zip you downloaded yourself.
+name: Leap of Life
+game_slug: leap-of-life
+version: summer-frog-game-jam-v1
+slug: leap-of-life-summer-frog-game-jam-v1
+runner: wine
+
+script:
+  files:
+  - installer: "N/A:Select the leap-of-life-windows.zip you downloaded from itch.io"
+
+  game:
+    # The zip has no wrapper directory, its contents land directly in $GAMEDIR.
+    # FrogSniper is the internal project name of the game.
+    exe: $GAMEDIR/FrogSniper.exe
+    prefix: $GAMEDIR
+    arch: win64
+
+  installer:
+  - task:
+      name: create_prefix
+      prefix: $GAMEDIR
+      arch: win64
+  - extract:
+      file: installer
+      dst: $GAMEDIR
+  - task:
+      name: wineexec
+      executable: $GAMEDIR/Engine/Extras/Redist/en-us/vc_redist.x64.exe
+      args: /q /norestart
+      prefix: $GAMEDIR

@@ -1,0 +1,3 @@
+# local test artifacts
+*.log
+test-*.yaml
