@@ -21,7 +21,28 @@ prefix, unpacks the game into it and registers it with Lutris.
 3. When the installer asks for a file, point it at the zip from step 1.
 
 Lutris downloads and runs the script directly from the URL — no lutris.net account and no
-installer moderation involved. Tested with Lutris 0.5.22.
+installer moderation involved.
+
+## Tested
+
+Full install and a play session on 2026-08-14:
+
+| | |
+| --- | --- |
+| Lutris | 0.5.22 |
+| Wine | system Wine 11.13 (no version pinned in the script) |
+| GPU / driver | AMD Radeon 780M, amdgpu 26.1.5, Xwayland |
+| Renderer | DX12 through vkd3d-proton — no `-dx11`/`-vulkan` fallback needed |
+| Engine | Unreal Engine 5.8 |
+| Install size | 939 MB in the game directory (prefix included) |
+
+The game runs and exits cleanly. Lutris tracks it correctly: `FrogSniper.exe` is only a
+launcher stub, and both it and the `FrogSniper-Win64-Shipping.exe` it spawns stay children of
+`lutris-wrapper`, so Lutris notices when the game quits.
+
+Harmless noise in the log on first start: `Failed to map read-only cache: vkd3d-proton.cache`
+(the shader cache does not exist yet) and `readMonitorEdidFromKey` / `DXGI: Failed to parse
+display metadata` under Xwayland.
 
 ### Why you have to download the zip yourself
 
@@ -55,7 +76,17 @@ lutris -i ./leap-of-life.yaml
 ```
 
 Logs land in `~/.cache/lutris/lutris.log`; the installed configuration is written to
-`~/.local/share/lutris/games/leap-of-life-<timestamp>.yml`.
+`~/.local/share/lutris/games/leap-of-life-summer-frog-game-jam-v1-<timestamp>.yml`.
+
+To avoid clicking through the file chooser on every test run, do **not** put an absolute path in
+`files:`. Lutris 0.5.22 rewrites such a path to `file://…` and then hands it to `requests`, which
+has no `file://` adapter and fails with `InvalidSchema`. Serve the zip locally instead:
+
+```bash
+python3 -m http.server 8931 --bind 127.0.0.1 --directory ~/Downloads &
+sed 's|"N/A:.*"|http://127.0.0.1:8931/leap-of-life-windows.zip|' leap-of-life.yaml > test-install.yaml
+lutris -i ./test-install.yaml
+```
 
 ## Game details
 
