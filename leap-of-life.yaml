@@ -20,7 +20,7 @@ script:
   game:
     # The zip has no wrapper directory, its contents land directly in $GAMEDIR.
     # FrogSniper is the internal project name of the game.
-    exe: $GAMEDIR/FrogSniper.exe
+    exe: $GAMEDIR/LeapOfLife.exe
     prefix: $GAMEDIR
     arch: win64
 
