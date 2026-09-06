@@ -36,8 +36,8 @@ Full install and a play session on 2026-08-14:
 | Engine | Unreal Engine 5.8 |
 | Install size | 939 MB in the game directory (prefix included) |
 
-The game runs and exits cleanly. Lutris tracks it correctly: `FrogSniper.exe` is only a
-launcher stub, and both it and the `FrogSniper-Win64-Shipping.exe` it spawns stay children of
+The game runs and exits cleanly. Lutris tracks it correctly: `LeapOfLife.exe` is only a
+launcher stub, and both it and the `LeapOfLife-Win64-Shipping.exe` it spawns stay children of
 `lutris-wrapper`, so Lutris notices when the game quits.
 
 Harmless noise in the log on first start: `Failed to map read-only cache: vkd3d-proton.cache`
@@ -63,7 +63,7 @@ a single line:
 | `create_prefix` | 64-bit Wine prefix in the game directory |
 | `extract` | The zip has no wrapper directory, so its contents go straight into `$GAMEDIR` |
 | `wineexec` | Runs the bundled `vc_redist.x64.exe` with `/q /norestart` |
-| launch | `$GAMEDIR/FrogSniper.exe` — `FrogSniper` is the game's internal project name |
+| launch | `$GAMEDIR/LeapOfLife.exe` — `LeapOfLife` is the game's internal project name |
 
 No pinned Wine version, no Winetricks, no launch flags: DXVK, esync and fsync stay on Lutris'
 defaults. The shipped build contains `D3D11RHI`, `D3D12RHI` and `VulkanRHI`, so `-dx11` or
